@@ -1,0 +1,42 @@
+/* Lit by the flame: tokens from the Figma collections Lamp/Primitives, Lamp/Surface and Lamp/Light (Freefall mode). */
+:root {
+  --void-950: #0a0908; --char-900: #100e0d; --char-850: #151311; --char-800: #1b1815; --char-700: #24201c; --char-600: #312c26; --char-500: #433d35;
+  --bone-50: #f3eee4; --bone-200: #cfc8ba; --bone-400: #9a9284; --bone-600: #6f685d;
+  --blue-100: #e4f0ff; --blue-200: #b7d6ff; --blue-300: #84b8ff; --blue-400: #4f93fa; --blue-500: #2b6fe0; --blue-700: #123f94; --blue-900: #0a2150;
+  --amber-400: #e58e3c;
+
+  --bg-stage: var(--void-950); --bg-ledger: var(--char-900); --bg-plate: var(--char-850); --bg-raised: var(--char-800); --bg-hover: var(--char-700);
+  --line-hair: var(--char-600); --line-strong: var(--char-500);
+  --text-primary: var(--bone-50); --text-secondary: var(--bone-200); --text-muted: var(--bone-400); --text-faint: var(--bone-600);
+  --ink-on-light: var(--void-950);
+  --data-space: var(--blue-400); --data-earth: var(--amber-400); --data-nodata: var(--bone-600);
+  --ink-a04: #f3eee40a; --ink-a08: #f3eee414; --ink-a12: #f3eee41f; --ink-a20: #f3eee433;
+
+  --light-core: var(--blue-100); --light-rim: var(--blue-200); --light-accent: var(--blue-300); --light-glow: var(--blue-400);
+  --light-deep: var(--blue-700); --light-shadow: var(--blue-900);
+  --light-glow-80: #4f93facc; --light-glow-60: #4f93fa99; --light-glow-35: #4f93fa59; --light-glow-18: #4f93fa2e;
+  --light-glow-10: #4f93fa1a; --light-glow-04: #4f93fa0a; --light-glow-00: #4f93fa00;
+
+  --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Geist', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --title: 'Inria Sans', 'Geist', 'Segoe UI', sans-serif;
+  --numeral-s: 'Instrument Sans', 'Geist', 'Segoe UI', sans-serif;
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --hatch: repeating-linear-gradient(-45deg, var(--char-500) 0 1px, transparent 1px 4px);
+}
+
+/* Lamp/* text styles. Nothing on screen is smaller than 12 px. */
+.t-title { font: 400 32px/36px var(--title); letter-spacing: 0; }
+.t-numeral { font: 400 48px/48px var(--title); }
+.t-numeral-s { font: 400 28px/30px var(--numeral-s); }
+.t-note { font: italic 400 18px/26px var(--serif); }
+.t-body { font: 400 14px/20px var(--sans); }
+.t-label { font: 500 12px/16px var(--sans); }
+.t-micro { font: 400 12px/16px var(--sans); }
+.t-data { font: 400 13px/18px var(--mono); }
+.t-code { font: 500 12px/16px var(--mono); }
+
+.c-primary { color: var(--text-primary); } .c-secondary { color: var(--text-secondary); }
+.c-muted { color: var(--text-muted); } .c-faint { color: var(--text-faint); } .c-accent { color: var(--light-accent); }
