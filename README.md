@@ -2,8 +2,6 @@
 
 What does NASA know about fire in the air people will breathe? Pick a cabin (ISS, EVA prep, Moon base, spacesuit, Apollo 1) and every flame in NASA's PSI repository relights for it: the investigations are ranked, each test opens at true scale, and the air nobody has tested is explored with a flame model that is labelled as one.
 
-Built from the design spec `docs/figma_final_spec.md`. The build plan is `docs/site_build_plan.md`.
-
 ## Repository layout
 
 | Path | What |
@@ -11,7 +9,6 @@ Built from the design spec `docs/figma_final_spec.md`. The build plan is `docs/s
 | `site/` | The website, deployable as is (static files plus one optional serverless function in `site/api/`) |
 | `site_build/` | Node scripts with no npm packages: data build, checks, local server, screenshots |
 | `data/psi/` | The NASA PSI tables the site is built from, unchanged (see `data/README.md`) |
-| `docs/` | Design spec, build plan, follow-up configuration notes, and the hackathon's judging and submission guides |
 
 ## Run it
 
