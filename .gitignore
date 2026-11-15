@@ -3,3 +3,4 @@
 !.env.example
 node_modules/
 .vercel/
+/demo/flamelet-demo-NAND-final.mp4
