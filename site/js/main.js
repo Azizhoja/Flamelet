@@ -14,7 +14,7 @@
   C.store.on(render);
 
   document.addEventListener('click', function (e) {
-    if (C.ogonek.intercept(e)) return;                    // "Ask Ogonek" mode: the next click explains
+    if (C.ogonek.intercept(e)) return;                    // "Ask Flamey" mode: the next click explains
     var a = e.target.closest('[data-act]');
     if (!a) return;
     var s = C.store.state;

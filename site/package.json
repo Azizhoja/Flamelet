@@ -1,7 +1,7 @@
 {
-  "name": "codex-of-fire",
+  "name": "flamelet",
   "private": true,
-  "description": "Codex of Fire: NASA PSI microgravity-combustion data by cabin atmosphere. The site is static, with no npm dependencies and an optional follow-up endpoint.",
+  "description": "Flamelet: NASA PSI microgravity-combustion data by cabin atmosphere. The site is static, with no npm dependencies and an optional follow-up endpoint.",
   "scripts": {
     "start": "node ../site_build/serve.mjs"
   }

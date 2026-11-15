@@ -1,5 +1,5 @@
 /*
- * Ogonek: right-click anything (or press the dock, then click). The flame flies to the spot and
+ * Flamey: right-click anything (or press the dock, then click). The flame flies to the spot and
  * explains it: a plain sentence for a student, the formula with this row's numbers for a scientist,
  * and the source. All of that is written here by code from the data, so no number is invented.
  * Optional follow-up questions use the same facts via api/ogonek.mjs.
@@ -61,9 +61,9 @@
   function entry(key, el) {
     var parts = key.split(':'), head = parts[0], c = C.store.cabin(), t = C.store.test(), p = C.burn.plan, inv;
     switch (head) {
-      case 'brand': return { term: 'Codex of Fire', plain: 'A map of what NASA knows about fire in the air people will breathe in space.', numbers: S.tests.length + ' tests from 6 row-level tables, ' + S.investigations.length + ' combustion investigations, all from NASA’s Physical Sciences Informatics repository.', chips: '<a class="chip" href="https://psi.nasa.gov/" target="_blank" rel="noopener">psi.nasa.gov</a>' };
+      case 'brand': return { term: 'Flamelet', plain: 'A map of what NASA knows about fire in the air people will breathe in space.', numbers: S.tests.length + ' tests from 6 row-level tables, ' + S.investigations.length + ' combustion investigations, all from NASA’s Physical Sciences Informatics repository.', chips: '<a class="chip" href="https://psi.nasa.gov/" target="_blank" rel="noopener">psi.nasa.gov</a>' };
       case 'search': return { term: 'Search', plain: 'Find an investigation, a cabin or a test by its name or id.', numbers: 'Press Ctrl K (⌘K on a Mac) from anywhere.' };
-      case 'ogonek': return { term: 'Ogonek', plain: 'The little flame that explains things. Right-click anything, or press here and then click.', numbers: 'Explanations are written by code from NASA’s rows. Follow-up answers use the same facts and may require independent verification.' };
+      case 'ogonek': return { term: 'Flamey', plain: 'The little flame that explains things. Right-click anything, or press here and then click.', numbers: 'Explanations are written by code from NASA’s rows. Follow-up answers use the same facts and may require independent verification.' };
       case 'cabin': case 'cabinsrc': {
         var cb = S.cabinById[parts[1]], n = S.counts(cb);
         return { term: cb.name, badge: n.total ? null : 'nodata', plain: { iss: 'The air on the International Space Station: the same mix and pressure as at sea level.', moon: 'The air NASA expects in a Moon base and pressurized rovers: richer in oxygen and thinner, so crews can go out in spacesuits without long pre-breathing.', eva: 'The Space Shuttle’s air before a spacewalk: thinner and a little richer in oxygen, to wash nitrogen out of the crew’s blood.', suit: 'Pure oxygen at low pressure, inside a spacesuit.', apollo1: 'The pure-oxygen cabin of Apollo 1, where a fire killed three astronauts in 1967.' }[cb.id],
@@ -147,7 +147,7 @@
   var END = { Disruption: 'the droplet broke apart', Extinction: 'the flame went out', Completion: 'the droplet burned away' };
   function fallback(el) {
     var txt = (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 80);
-    return { term: txt || 'This part of the page', plain: 'Ogonek has no note for this yet. Right-click a number, a row, a mark or a label for its source.', numbers: '' };
+    return { term: txt || 'This part of the page', plain: 'Flamey has no note for this yet. Right-click a number, a row, a mark or a label for its source.', numbers: '' };
   }
 
   // ------------------------------------------------------------------ popover and flight
@@ -179,11 +179,11 @@
       document.body.appendChild(fly); void fly.offsetWidth; fly.style.transition = '';
       C.cabins.renderDock(true);
     }
-    pop = document.createElement('div'); pop.className = 'popover'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Ogonek explains: ' + e.term);
+    pop = document.createElement('div'); pop.className = 'popover'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-label', 'Flamey explains: ' + e.term);
     pop.innerHTML = '<div class="term">' + esc(e.term) + (e.badge ? C.badge(e.badge) : '') + '</div>' +
       '<p class="plain">' + esc(e.plain) + '</p>' + (e.numbers ? '<p class="numbers">' + esc(e.numbers) + '</p>' : '') +
       (e.chips ? '<div class="src">' + e.chips + '</div>' : '') +
-      '<form><input name="q" type="text" placeholder="Ask a follow-up" autocomplete="off" maxlength="400" aria-label="Ask Ogonek a follow-up question"></form><div class="answer" hidden></div>';
+      '<form><input name="q" type="text" placeholder="Ask a follow-up" autocomplete="off" maxlength="400" aria-label="Ask Flamey a follow-up question"></form><div class="answer" hidden></div>';
     pop.style.visibility = 'hidden'; pop.style.left = '0px'; pop.style.top = '0px';
     document.body.appendChild(pop);
     // place it beside what it explains, never over it: above, else below, else to the side of the click
@@ -211,7 +211,7 @@
         if (pop !== mine) return;
         out.className = 'answer';
         if (res.ok && res.j.answer) out.innerHTML = esc(res.j.answer);
-        else out.textContent = res.status === 429 && res.j && res.j.error === 'daily limit' ? 'Ogonek has answered all the follow-ups it can today. Everything above comes straight from NASA’s rows.'
+        else out.textContent = res.status === 429 && res.j && res.j.error === 'daily limit' ? 'Flamey has answered all the follow-ups it can today. Everything above comes straight from NASA’s rows.'
           : res.status === 429 ? 'Too many questions at once. Try again in a minute.' :'Follow-up answers are off on this copy of the site. Everything above comes straight from NASA’s rows.';
       })
       .catch(function () { if (pop === mine) { out.className = 'answer'; out.textContent = 'Follow-up answers need the site’s server (node site_build/serve.mjs). Everything above comes straight from NASA’s rows.'; } });
@@ -228,7 +228,7 @@
       window.addEventListener('resize', function () { close(); });
     },
     explain: explain, close: close,
-    /** In "Ask Ogonek" mode the next click explains instead of acting. */
+    /** In "Ask Flamey" mode the next click explains instead of acting. */
     intercept: function (ev) {
       if (ev.target.closest('.popover')) return true;
       var ex = ev.target.closest('[data-act="explain"]');

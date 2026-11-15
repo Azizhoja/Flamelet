@@ -1,4 +1,4 @@
-// Serves site/ and Ogonek's follow-up endpoint on one port. No npm packages.
+// Serves site/ and Flamey's follow-up endpoint on one port. No npm packages.
 //   node site_build/serve.mjs [port]        then open http://127.0.0.1:8080/
 // Set GEMINI_API_KEY to enable follow-up answers; without it the page still works and says so.
 import { createServer } from 'node:http';
@@ -40,5 +40,5 @@ export function serve(port = 8080, host = '127.0.0.1') {
 
 if (process.argv[1] && process.argv[1].endsWith('serve.mjs')) {
   const port = Number(process.argv[2]) || 8080;
-  serve(port).then(() => console.log(`Codex of Fire at http://127.0.0.1:${port}/` + (process.env.GEMINI_API_KEY ? '' : '  (no GEMINI_API_KEY: follow-up answers are off)')));
+  serve(port).then(() => console.log(`Flamelet at http://127.0.0.1:${port}/` + (process.env.GEMINI_API_KEY ? '' : '  (no GEMINI_API_KEY: follow-up answers are off)')));
 }

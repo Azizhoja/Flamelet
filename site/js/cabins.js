@@ -68,7 +68,7 @@
   }
 
   function renderDock(away) {
-    $('dock').innerHTML = (away ? '<i class="away"></i>' : '<i class="flame-dot" id="dock-flame"></i>') + '<span><b>Ask Ogonek</b><span>or right-click anything</span></span>';
+    $('dock').innerHTML = (away ? '<i class="away"></i>' : '<i class="flame-dot" id="dock-flame"></i>') + '<span><b>Ask Flamey</b><span>or right-click anything</span></span>';
   }
 
   C.cabins = { render: render, renderDock: renderDock };
