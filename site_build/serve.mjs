@@ -22,7 +22,8 @@ export function serve(port = 8080, host = '127.0.0.1') {
       let body = '';
       for await (const chunk of req) { body += chunk; if (body.length > 20000) { res.writeHead(413).end(); return; } }
       let out;
-      try { out = await answer(JSON.parse(body || '{}'), process.env.GEMINI_API_KEY); } catch (e) { out = { status: 400, body: { error: 'bad request' } }; }
+      const who = String(req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'local').split(',')[0].trim();   // per visitor, behind the host's proxy
+      try { out = await answer(JSON.parse(body || '{}'), process.env.GEMINI_API_KEY, who); } catch (e) { out = { status: 400, body: { error: 'bad request' } }; }
       res.writeHead(out.status, { 'content-type': 'application/json' }).end(JSON.stringify(out.body));
       return;
     }
@@ -39,6 +40,8 @@ export function serve(port = 8080, host = '127.0.0.1') {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('serve.mjs')) {
-  const port = Number(process.argv[2]) || 8080;
-  serve(port).then(() => console.log(`Flamelet at http://127.0.0.1:${port}/` + (process.env.GEMINI_API_KEY ? '' : '  (no GEMINI_API_KEY: follow-up answers are off)')));
+  // On a host (Sevalla etc.) the platform sets PORT and needs 0.0.0.0; locally it stays 127.0.0.1:8080.
+  const port = Number(process.argv[2]) || Number(process.env.PORT) || 8080;
+  const host = process.env.HOST || (process.env.PORT ? '0.0.0.0' : '127.0.0.1');
+  serve(port, host).then(() => console.log(`Flamelet at http://${host}:${port}/` + (process.env.GEMINI_API_KEY ? '' : '  (no GEMINI_API_KEY: follow-up answers are off)')));
 }

@@ -1,0 +1,9 @@
+{
+  "name": "flamelet",
+  "private": true,
+  "description": "Flamelet: NASA PSI microgravity-combustion data by cabin atmosphere. No npm dependencies; this file only tells a host how to start the server.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "start": "node site_build/serve.mjs"
+  }
+}

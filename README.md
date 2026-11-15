@@ -17,9 +17,9 @@ What does NASA know about fire in the air people will breathe? Pick a cabin (ISS
 | Open the file | `site/index.html` in a browser | Everything except Flamey's follow-up answers |
 | Local server | `node site_build/serve.mjs` then <http://127.0.0.1:8080/> | Same, plus follow-ups once a key is set (below) |
 | Follow-up answers | copy `.env.example` to `.env` (gitignored) and set `GEMINI_API_KEY`, then `node site_build/serve.mjs` | Flamey answers questions from the facts on screen |
-| Deploy | Point Vercel (or any static host) at `site/`. Vercel runs `api/flamey.mjs` as a function; set `GEMINI_API_KEY` there, plus `KV_REST_API_URL` and `KV_REST_API_TOKEN` (Vercel KV / Upstash Redis) so the follow-up limits hold across instances | All of it |
+| Deploy | Run `npm start` (= `node site_build/serve.mjs`) as a Node app on a host such as Sevalla. It serves `site/` and `/api/flamey` from one process, listens on the host's `PORT` and needs only `GEMINI_API_KEY` set as an environment variable. (`site/api/flamey.mjs` is the same endpoint as a Vercel function, if you prefer that.) | All of it |
 
-Follow-up limits: 12 questions a minute per visitor and `FLAMEY_DAILY_LIMIT` (default 1000) a day for the whole site. Without the KV variables each serverless instance counts on its own and a cold start resets it, so they are only a per-instance brake. Set a spending quota on the API key in Google Cloud before sharing the link.
+Follow-up limits: 12 questions a minute per visitor and `FLAMEY_DAILY_LIMIT` (default 1000) a day for the whole site, counted in the server's memory (a restart resets them). On several instances or serverless, set `KV_REST_API_URL` and `KV_REST_API_TOKEN` (Upstash Redis) so the counts are shared. Set a spending quota on the API key in Google Cloud before sharing the link.
 
 No build step. The page is plain HTML, CSS and JavaScript; no npm packages. The optional follow-up endpoint uses plain `fetch`.
 
