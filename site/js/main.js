@@ -14,7 +14,7 @@
   C.store.on(render);
 
   document.addEventListener('click', function (e) {
-    if (C.ogonek.intercept(e)) return;                    // "Ask Flamey" mode: the next click explains
+    if (C.flamey.intercept(e)) return;                    // "Ask Flamey" mode: the next click explains
     var a = e.target.closest('[data-act]');
     if (!a) return;
     var s = C.store.state;
@@ -33,18 +33,18 @@
   });
   document.addEventListener('contextmenu', function (e) {
     if (e.target.closest('input[type=search], .popover input')) return;
-    e.preventDefault(); C.ogonek.explain(e.target, e.clientX, e.clientY);
+    e.preventDefault(); C.flamey.explain(e.target, e.clientX, e.clientY);
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (C.ogonek.close()) return;
+      if (C.flamey.close()) return;
       if (document.activeElement && document.activeElement.id === 'search') return;
       var s = C.store.state;
       if (s.wi) C.store.set({ wi: null }); else if (s.test) C.store.set({ test: null }); else if (s.inv) C.store.set({ inv: null });
     }
     // Shift+F10 or the menu key: explain the focused element
     if ((e.key === 'ContextMenu' || (e.key === 'F10' && e.shiftKey)) && document.activeElement && document.activeElement !== document.body) {
-      e.preventDefault(); var r = document.activeElement.getBoundingClientRect(); C.ogonek.explain(document.activeElement, r.left + 12, r.top + r.height / 2);
+      e.preventDefault(); var r = document.activeElement.getBoundingClientRect(); C.flamey.explain(document.activeElement, r.left + 12, r.top + r.height / 2);
     }
   });
   $('view-cabin').addEventListener('mousemove', C.stageCabin.tip);
@@ -62,7 +62,7 @@
   C.cabins.renderDock(false);
   C.search.init();
   C.stageTest.init();
-  C.ogonek.init();
+  C.flamey.init();
   function start() { C.store.init(); }
   // lay out once the fonts are in, so text measurements and the ladder are right the first time
   if (document.fonts && document.fonts.ready) { var done = false, go = function () { if (!done) { done = true; start(); } }; document.fonts.ready.then(go); setTimeout(go, 600); }

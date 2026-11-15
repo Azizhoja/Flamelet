@@ -1,4 +1,4 @@
-# Codex of Fire
+# Flamelet
 
 What does NASA know about fire in the air people will breathe? Pick a cabin (ISS, EVA prep, Moon base, spacesuit, Apollo 1) and every flame in NASA's PSI repository relights for it: the investigations are ranked, each test opens at true scale, and the air nobody has tested is explored with a flame model that is labelled as one.
 
@@ -14,12 +14,12 @@ What does NASA know about fire in the air people will breathe? Pick a cabin (ISS
 
 | How | Command | What works |
 |---|---|---|
-| Open the file | `site/index.html` in a browser | Everything except Ogonek's follow-up answers |
+| Open the file | `site/index.html` in a browser | Everything except Flamey's follow-up answers |
 | Local server | `node site_build/serve.mjs` then <http://127.0.0.1:8080/> | Same, plus follow-ups once a key is set (below) |
-| Follow-up answers | copy `.env.example` to `.env` (gitignored) and set `GEMINI_API_KEY`, then `node site_build/serve.mjs` | Ogonek answers questions from the facts on screen |
-| Deploy | Point Vercel (or any static host) at `site/`. Vercel runs `api/ogonek.mjs` as a function; set `GEMINI_API_KEY` there, plus `KV_REST_API_URL` and `KV_REST_API_TOKEN` (Vercel KV / Upstash Redis) so the follow-up limits hold across instances | All of it |
+| Follow-up answers | copy `.env.example` to `.env` (gitignored) and set `GEMINI_API_KEY`, then `node site_build/serve.mjs` | Flamey answers questions from the facts on screen |
+| Deploy | Point Vercel (or any static host) at `site/`. Vercel runs `api/flamey.mjs` as a function; set `GEMINI_API_KEY` there, plus `KV_REST_API_URL` and `KV_REST_API_TOKEN` (Vercel KV / Upstash Redis) so the follow-up limits hold across instances | All of it |
 
-Follow-up limits: 12 questions a minute per visitor and `OGONEK_DAILY_LIMIT` (default 1000) a day for the whole site. Without the KV variables each serverless instance counts on its own and a cold start resets it, so they are only a per-instance brake. Set a spending quota on the API key in Google Cloud before sharing the link.
+Follow-up limits: 12 questions a minute per visitor and `FLAMEY_DAILY_LIMIT` (default 1000) a day for the whole site. Without the KV variables each serverless instance counts on its own and a cold start resets it, so they are only a per-instance brake. Set a spending quota on the API key in Google Cloud before sharing the link.
 
 No build step. The page is plain HTML, CSS and JavaScript; no npm packages. The optional follow-up endpoint uses plain `fetch`.
 
@@ -33,7 +33,7 @@ No build step. The page is plain HTML, CSS and JavaScript; no npm packages. The 
 | 04 Test · 196F001 | `#cabin=moon&inv=PSI-69&test=196F001` |
 | 05 What-if · CO₂ 20 % | `#cabin=moon&inv=PSI-69&test=196F001&dil=CO2&frac=20` |
 | 06 Test · C08H201 | `#cabin=moon&inv=PSI-69&test=C08H201` |
-| 07 Ogonek explains | 06, then click or right-click "Fuel left at flame-out" |
+| 07 Flamey explains | 06, then click or right-click "Fuel left at flame-out" |
 
 Keys: Ctrl K / ⌘K search, Esc steps back, Shift F10 explains the focused element.
 
@@ -47,7 +47,7 @@ Keys: Ctrl K / ⌘K search, Esc steps back, Shift F10 explains the focused eleme
 | Not counted | Burner-oxygen flames, and the 59 CFI-G runs logged as never lighting ("Hot ignition" No, burn time 0 or blank, no cool flame noted). They stay in the tables, in groups of their own |
 | `≈ model` | Flame size and colour: Fire-X lite (`site/model/`). What-if burning rate: least-squares fit to 257 FLEX tests, r² 0.727, refitted on every data build |
 | `∅` | No test in PSI, or a value NASA did not record |
-| Ogonek | Explanations are written by code from the rows. Follow-up answers use the same facts and may require independent verification |
+| Flamey | Explanations are written by code from the rows. Follow-up answers use the same facts and may require independent verification |
 
 ## Checks
 
@@ -61,3 +61,7 @@ node site_build/shots.mjs        # screenshots of the seven frames → site_buil
 ## Licences
 
 NASA PSI data: CC0-1.0. Fonts (Geist, Geist Mono, Instrument Serif, Instrument Sans, Inria Sans): SIL Open Font License. Flame model after Wrede et al., "Fire-X", ACM TOG 44(6), 2025 (CC BY 4.0).
+
+
+## SI usage
+Claude, ChatGPT, Grok were used to acselerate the development, and helped with code generation and debugging.

@@ -1,4 +1,4 @@
-// Vercel serverless function: POST /api/ogonek  { question, facts }  →  { answer, model }
+// Vercel serverless function: POST /api/flamey  { question, facts }  →  { answer, model }
 import { answer } from './_core.mjs';
 
 export default async function handler(req, res) {

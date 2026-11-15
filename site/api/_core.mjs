@@ -1,11 +1,11 @@
 // Flamey's follow-up answers. The page sends the visitor's question and the facts it already shows
-// (all computed from NASA's tables). Shared by the Vercel function (api/ogonek.mjs) and the local server
+// (all computed from NASA's tables). Shared by the Vercel function (api/flamey.mjs) and the local server
 // (site_build/serve.mjs).
 //
 // Needs GEMINI_API_KEY (no npm packages: plain fetch).
 // Without it, it answers 503 and the page says follow-ups are off; everything else still works.
 //
-// Limits: 12 questions a minute per visitor and OGONEK_DAILY_LIMIT (default 1000) a day for the whole site.
+// Limits: 12 questions a minute per visitor and FLAMEY_DAILY_LIMIT (default 1000) a day for the whole site.
 // On a serverless host every instance has its own memory, so the counts must live in a shared store: set
 // KV_REST_API_URL and KV_REST_API_TOKEN (Vercel KV / Upstash Redis; UPSTASH_REDIS_REST_* also work). Without
 // them each process counts alone, which holds for one server (site_build/serve.mjs) but not across instances.
@@ -25,7 +25,7 @@ Keep these distinctions, because the site is built on them: values NASA recorded
 Reply in plain text with no markdown and no lists, in three sentences or fewer. Start with the answer itself.`;
 
 const PER_MINUTE = 12;
-const PER_DAY = Number(process.env.OGONEK_DAILY_LIMIT) || 1000;
+const PER_DAY = Number(process.env.FLAMEY_DAILY_LIMIT) || 1000;
 const KV_URL = (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '').replace(/\/+$/, '');
 const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
 
@@ -56,10 +56,10 @@ async function limited(who) {
   const now = Date.now(), minute = Math.floor(now / 60000), day = Math.floor(now / 86400000);
   const id = createHash('sha256').update(String(who)).digest('hex').slice(0, 16);   // no raw addresses in the store
   let shared = !!(KV_URL && KV_TOKEN), n;
-  try { n = shared ? await kvCount(`ogonek:v:${id}:${minute}`, 61) : localVisitor(id, now); }
+  try { n = shared ? await kvCount(`flamey:v:${id}:${minute}`, 61) : localVisitor(id, now); }
   catch { shared = false; n = localVisitor(id, now); }
   if (n > PER_MINUTE) return 'slow down';
-  try { n = shared ? await kvCount(`ogonek:day:${day}`, 90000) : localDay(day); }
+  try { n = shared ? await kvCount(`flamey:day:${day}`, 90000) : localDay(day); }
   catch { n = localDay(day); }
   return n > PER_DAY ? 'daily limit' : null;
 }

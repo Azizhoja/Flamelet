@@ -17,7 +17,7 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
 export function serve(port = 8080, host = '127.0.0.1') {
   const server = createServer(async (req, res) => {
     const url = new URL(req.url, 'http://x');
-    if (url.pathname === '/api/ogonek') {
+    if (url.pathname === '/api/flamey') {
       if (req.method !== 'POST') { res.writeHead(405).end(); return; }
       let body = '';
       for await (const chunk of req) { body += chunk; if (body.length > 20000) { res.writeHead(413).end(); return; } }

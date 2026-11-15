@@ -325,8 +325,8 @@ input[type=range]:disabled::-moz-range-thumb { background: var(--char-500); bord
 body.asking, body.asking * { cursor: help !important; }
 
 /* ---------------------------------------------------------------- Flamey */
-.ogonek-fly { position: fixed; z-index: 60; width: 16px; height: 16px; margin: -8px 0 0 -8px; pointer-events: none; transition: transform 320ms var(--ease); will-change: transform; left: 0; top: 0; }
-.ogonek-fly .flame-dot { width: 16px; height: 16px; }
+.flamey-fly { position: fixed; z-index: 60; width: 16px; height: 16px; margin: -8px 0 0 -8px; pointer-events: none; transition: transform 320ms var(--ease); will-change: transform; left: 0; top: 0; }
+.flamey-fly .flame-dot { width: 16px; height: 16px; }
 .popover {
   position: fixed; z-index: 50; width: 288px; background: var(--bg-raised); border: 1px solid var(--line-strong); border-radius: 12px; padding: 16px;
   box-shadow: 0 16px 48px #000c, 0 0 0 1px #0006; animation: pop .2s var(--ease);

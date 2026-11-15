@@ -19,7 +19,7 @@ export const STATES = {
   '04-196F001': { hash: 'cabin=moon&inv=PSI-69&test=196F001', seek: 2.1 },
   '05-whatif': { hash: 'cabin=moon&inv=PSI-69&test=196F001&dil=CO2&frac=20', seek: 4.0, wait: 1500, outcome: true },
   '06-C08H201': { hash: 'cabin=moon&inv=PSI-69&test=C08H201', seek: 4.0 },
-  '07-ogonek': { hash: 'cabin=moon&inv=PSI-69&test=C08H201', seek: 4.0, explain: '[data-x="readout:left"]' },
+  '07-flamey': { hash: 'cabin=moon&inv=PSI-69&test=C08H201', seek: 4.0, explain: '[data-x="readout:left"]' },
   '08-iss': { hash: 'cabin=iss' },
   '09-cfig': { hash: 'cabin=moon&inv=PSI-159&test=21088A1' },
   '10-eva': { hash: 'cabin=eva&inv=PSI-99' }
@@ -39,7 +39,7 @@ try {
     await sleep(900);
     if (st.seek != null) { await b.eval(`Codex.stageTest.seekTo(${st.seek})`); await b.eval(`new Promise(function(ok){var n=0;(function w(){var f=Codex.stageTest.frame();if((f&&!f.catching&&f.t>=${st.seek}-0.05)||n++>400)ok();else setTimeout(w,100);})();})`); await sleep(st.wait || 600); }
     if (st.outcome) await b.eval(`new Promise(function(ok){var n=0;(function w(){var p=Codex.burn.plan;if((p&&p.outcome)||n++>900)ok();else setTimeout(w,100);})();})`);
-    if (st.explain) { await b.eval(`(function(){var el=document.querySelector(${JSON.stringify(st.explain)});var r=el.getBoundingClientRect();Codex.ogonek.explain(el,r.left+20,r.top+10);})()`); await sleep(900); }
+    if (st.explain) { await b.eval(`(function(){var el=document.querySelector(${JSON.stringify(st.explain)});var r=el.getBoundingClientRect();Codex.flamey.explain(el,r.left+20,r.top+10);})()`); await sleep(900); }
     const file = join(OUT, name + (size[0] === 1440 ? '' : '-' + size[0]) + '.png');
     await b.screenshot(file);
     const errs = b.logs.filter(l => /\[error\]|\[exception\]/.test(l));

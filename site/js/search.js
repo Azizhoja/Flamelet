@@ -32,7 +32,7 @@
     var it = items[i]; if (!it) return;
     $('search').value = ''; items = []; draw(); $('search').blur();
     if (it.go) C.store.set(it.go);
-    else { var b = $('search').getBoundingClientRect(); C.ogonek.explain({ closest: function () { return { dataset: { x: it.x } }; } }, b.left, b.bottom + 8); }
+    else { var b = $('search').getBoundingClientRect(); C.flamey.explain({ closest: function () { return { dataset: { x: it.x } }; } }, b.left, b.bottom + 8); }
   }
 
   C.search = {

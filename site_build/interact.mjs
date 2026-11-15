@@ -88,7 +88,7 @@ try {
   const file = pathToFileURL(fileURLToPath(new URL('../site/index.html', import.meta.url))).href;
   await b.goto(file + '#cabin=iss'); await sleep(1200);
   await check('opens from file:// with no server', async () => { const t = await b.eval(`document.getElementById('brief').innerText`); return /347 tests burned in this air/.test(t) || t; });
-  const errs = b.logs.filter(l => /\[error\]|\[exception\]/.test(l) && !/api\/ogonek|Failed to load resource|net::ERR/.test(l));
+  const errs = b.logs.filter(l => /\[error\]|\[exception\]/.test(l) && !/api\/flamey|Failed to load resource|net::ERR/.test(l));
   await check('no script errors', async () => errs.length === 0 || errs);
 } finally { await b.close(); server.close(); }
 console.log(bad ? `${bad} failed` : 'all interaction checks passed');

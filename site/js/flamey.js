@@ -2,7 +2,7 @@
  * Flamey: right-click anything (or press the dock, then click). The flame flies to the spot and
  * explains it: a plain sentence for a student, the formula with this row's numbers for a scientist,
  * and the source. All of that is written here by code from the data, so no number is invented.
- * Optional follow-up questions use the same facts via api/ogonek.mjs.
+ * Optional follow-up questions use the same facts via api/flamey.mjs.
  */
 (function () {
   'use strict';
@@ -63,7 +63,7 @@
     switch (head) {
       case 'brand': return { term: 'Flamelet', plain: 'A map of what NASA knows about fire in the air people will breathe in space.', numbers: S.tests.length + ' tests from 6 row-level tables, ' + S.investigations.length + ' combustion investigations, all from NASA’s Physical Sciences Informatics repository.', chips: '<a class="chip" href="https://psi.nasa.gov/" target="_blank" rel="noopener">psi.nasa.gov</a>' };
       case 'search': return { term: 'Search', plain: 'Find an investigation, a cabin or a test by its name or id.', numbers: 'Press Ctrl K (⌘K on a Mac) from anywhere.' };
-      case 'ogonek': return { term: 'Flamey', plain: 'The little flame that explains things. Right-click anything, or press here and then click.', numbers: 'Explanations are written by code from NASA’s rows. Follow-up answers use the same facts and may require independent verification.' };
+      case 'flamey': return { term: 'Flamey', plain: 'The little flame that explains things. Right-click anything, or press here and then click.', numbers: 'Explanations are written by code from NASA’s rows. Follow-up answers use the same facts and may require independent verification.' };
       case 'cabin': case 'cabinsrc': {
         var cb = S.cabinById[parts[1]], n = S.counts(cb);
         return { term: cb.name, badge: n.total ? null : 'nodata', plain: { iss: 'The air on the International Space Station: the same mix and pressure as at sea level.', moon: 'The air NASA expects in a Moon base and pressurized rovers: richer in oxygen and thinner, so crews can go out in spacesuits without long pre-breathing.', eva: 'The Space Shuttle’s air before a spacewalk: thinner and a little richer in oxygen, to wash nitrogen out of the crew’s blood.', suit: 'Pure oxygen at low pressure, inside a spacesuit.', apollo1: 'The pure-oxygen cabin of Apollo 1, where a fire killed three astronauts in 1967.' }[cb.id],
@@ -174,7 +174,7 @@
     // the flame leaves the dock and flies to the click
     if (!fly) {
       var from = dockPoint();
-      fly = document.createElement('div'); fly.className = 'ogonek-fly'; fly.innerHTML = '<span class="flame-dot"></span>';
+      fly = document.createElement('div'); fly.className = 'flamey-fly'; fly.innerHTML = '<span class="flame-dot"></span>';
       fly.style.transition = 'none'; fly.style.transform = 'translate(' + from.x + 'px,' + from.y + 'px)';
       document.body.appendChild(fly); void fly.offsetWidth; fly.style.transition = '';
       C.cabins.renderDock(true);
@@ -205,7 +205,7 @@
     var out = pop.querySelector('.answer'); out.hidden = false; out.className = 'answer wait'; out.textContent = 'Thinking…';
     var facts = ['On screen: ' + current.term + '. ' + current.plain + ' ' + (current.numbers || ''), current.facts || '', cabinFacts(), testFacts(C.store.test()), modelFacts()].filter(Boolean).join('\n');
     var mine = pop;
-    fetch('api/ogonek', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: q, facts: facts }) })
+    fetch('api/flamey', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ question: q, facts: facts }) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, status: r.status, j: j }; }); })
       .then(function (res) {
         if (pop !== mine) return;
@@ -217,7 +217,7 @@
       .catch(function () { if (pop === mine) { out.className = 'answer'; out.textContent = 'Follow-up answers need the site’s server (node site_build/serve.mjs). Everything above comes straight from NASA’s rows.'; } });
   }
 
-  C.ogonek = {
+  C.flamey = {
     init: function () {
       $('dock').addEventListener('click', function (ev) {
         ev.stopPropagation();
